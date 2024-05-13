@@ -1,6 +1,6 @@
 <template>
     <header class="header">
-        <router-link to="/" class="title">СЭД</router-link>
+        <img src="@/assets/images/icon.png" class="title" width="70"/>
         <div class="user_menu">
             <!--<div class="header_divider"></div>-->
             <img src="@/assets/images/profile_icon.png" class="user_icon inl_block" />
