@@ -13,20 +13,21 @@
                         {{doc.name}}
                 </div>
 
-                <BaseInput v-if="!doc.isDate && !doc.isTextArea" class="input"></BaseInput>
+                <BaseInput v-if="!doc.isDate && !doc.isTextArea" class="input" :value="doc.value"></BaseInput>
                     <div class="input" v-if="doc.isDate" style="margin-top: 0">  
                         <Calendar 
                             :id="index"
                             v-model="date"
                             dateFormat="dd.mm.yy" 
                             placeholder="__.__.____"
-                            style="border: 1px solid var(--primary-default); border-radius: 7px;"></Calendar> 
+                            style="border: 1px solid var(--primary-default); border-radius: 7px;">
+                        </Calendar> 
                     </div>
                 <Textarea v-if="doc.isTextArea" v-model="value" variant="filled" rows="5" cols="30" class="input"/>
 
             </div>
 
-            <form action="http://localhost:5173/Federation/Accreditation">
+            <form action="http://localhost:5173/Federation/Accreditation" style="margin-top: 40px; margin-left: 672px;">
                 <BaseButton id="send">
                     Готово
                 </BaseButton>
@@ -43,22 +44,19 @@
     import { ref } from "vue";
 
     const disabled = ref(false);
-    const date2 = ref()
-    const date10 = ref()
+    
+    const date = ref();
 
     const docs = [
-        { name: "Полное наименование общественной организации, включая организационно-правовую форму, с указанием ОГРН и ИНН)", id: 0},
-        { name: "Наименование документа органа по аккредитации об объявлении государственной аккредитации",  isAdded: true, id: 1},
+        { name: "Полное наименование общественной организации, включая организационно-правовую форму, с указанием ОГРН и ИНН)", id: 1, value: 'Региональная спортивная федерация спортивного ориентирования Ленинградской области, ОГРН: 1094700000097, ИНН: 4703110935'},
         { name: "Дата документа органа по аккредитации об объявлении государственной аккредитации", id: 2, isDate: true},
-        { name: "Номер документа органа по аккредитации об объявлении государственной аккредитации", id: 3},
-        { name: "Вид спорта", id: 4},
-        { name: "Наименование вида спорта в соответствии с ВРВС", id: 5},
-        { name: "Номер-код вида спорта в соответствии с ВРВС", id: 6},
-        { name: "Полное наименование региональной спортивной федерации, включая организационно-правовую форму", id: 7},
-        { name: "Юридический адрес региональной спортивной федерации", id: 8},
-        { name: "Президент региональной спортивной федерации", id: 9},
-        { name: "Дата", id: 10, isDate: true},
-        { name: "Перечень документов, приложенных к заявлению" , id: 11, isTextArea: true}
+        { name: "Номер документа органа по аккредитации об объявлении государственной аккредитации", id: 3, value: "1-5-84/2023"},
+        { name: "Вид спорта", id: 4, value: "Спортивное ориентирование"},
+        { name: "Наименование вида спорта в соответствии с ВРВС", id: 5, value: "Спортивное ориентирование"},
+        { name: "Номер-код вида спорта в соответствии с ВРВС", id: 6, value: "0830011811Я"},
+        { name: "Полное наименование региональной спортивной федерации, включая организационно-правовую форму", id: 7, value: "Региональная спортивная федерация спортивного ориентирования Ленинградской области"},
+        { name: "Юридический адрес региональной спортивной федерации", id: 8, value: "188664, Ленинградская обл, р-н Всеволожский, ГП Токсово, ул Спортивная, 6"},
+        { name: "Президент региональной спортивной федерации", id: 9, value: "Курдюмов Александр Александрович"},
         ]
 
 

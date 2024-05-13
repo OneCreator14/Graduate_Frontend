@@ -1,6 +1,6 @@
 <template>
    <div class="wrapper">
-     <h3 class="block">Создание заявки</h3>
+     <h3 class="block">Создание заявления</h3>
      <div class="back">
  
      </div>

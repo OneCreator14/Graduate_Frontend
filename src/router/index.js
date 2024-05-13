@@ -20,7 +20,6 @@ import Accreditation from '@/views/Federation/Requests/Accreditation.vue'
 import CreateDocF from '@/views/Federation/CreateDoc.vue'
 
 import Autorization from '@/views/Autorization/Autorization.vue'
-import Registration from '@/views/Autorization/Registration.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -60,11 +59,11 @@ const router = createRouter({
       name: 'Request',
       component: Request
     },
-    {
-      path: '/Committee/calplan',
-      name: 'CalPlan',
-      component: CalPlan
-    },
+    // {
+    //   path: '/Committee/calplan',
+    //   name: 'CalPlan',
+    //   component: CalPlan
+    // },
     {
       path: '/Federation/about',
       name: 'AboutF',
@@ -99,11 +98,6 @@ const router = createRouter({
       path: '/autorization',
       name: 'Autorization',
       component: Autorization
-    },
-    {
-      path: '/registration',
-      name: 'Registration',
-      component: Registration
     },
   ]
 })

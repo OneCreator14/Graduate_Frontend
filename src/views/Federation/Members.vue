@@ -66,7 +66,6 @@ const products = [
   { name: "Тренеры",         id: 2},
   { name: "Спортсмены",      id: 3},
   { name: "Судьи",           id: 4},
-  { name: "Сборная команда", id: 5},
 ]
 
 </script>

@@ -12,7 +12,7 @@
         size="small"
         color="default"
         id="add"
-        @click="temp">Создать заявку</BaseButton>
+        @click="temp">Создать заявление</BaseButton>
         </div>
         
 
@@ -22,17 +22,16 @@
             <Column field="dateEnd" header="Дата окончания"></Column>
             <Column field="status" header="Статус"></Column>
         </DataTable>
+
+            <!-- Всплывающее окно -->
+
+        <div class="card flex justify-content-center">
+          <Dialog v-model:visible="isVisible" modal header="Выберите услугу" :style="{ width: '25rem' }">
+            <Dropdown v-model="selectedProduct" :options="products" optionLabel="name" placeholder="Выберите..." id="Dropdown" />
+            <BaseButton type="button" size="middle" @click="goRequest" id="BaseButton">Ок</BaseButton>
+          </Dialog>
+        </div>
     </div>
-
-    <!-- Всплывающее окно -->
-    <div class="card flex justify-content-center">
-      <Dialog v-model:visible="isVisible" modal header="Выберите услугу" :style="{ width: '25rem' }">
-
-        <Dropdown v-model="selectedProduct" :options="products" optionLabel="name" placeholder="Выберите..." id="Dropdown" />
-        <BaseButton type="button" size="middle" @click="goRequest" id="BaseButton">Ок</BaseButton>
-        
-      </Dialog>
-   </div>
 </template>
 
 <script setup>

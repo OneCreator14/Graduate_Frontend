@@ -1,34 +1,36 @@
 <template>
     <div class="rectangle">
-            <div class = "grid">
-                <img src = "../../../public/user_icon.png" class = "circle">
-                <div class = "input_block">
-                    <input type="text" placeholder="Логин" />
-                    <input type="password" placeholder="Пароль" />
-                </div>
-                <div class = "registration_block">
-                    <div class = "label">Нет учетной записи?</div>
-                    <a href="/registration">
-                        <button class="registration"> Регистрация</button>
-                    </a>
-                </div>
-                <div>
-                    <a href="/">
-                        <BaseButton color="light-light" class="button"> Вход</BaseButton>
-                    </a>
-                </div>
-
+        <div class="grid">
+            <img src="@/assets/images/profile_icon.png" class="circle">
+            <div class="input_block">
+                <FloatLabel>
+                    <InputText id="username" v-model="value" placeholder="Логин"/>
+                </FloatLabel>
+                <FloatLabel>
+                    <InputText id="password" v-model="value2" placeholder="Пароль"/>
+                </FloatLabel>
             </div>
+            <div class="button">
+                <a href="/">
+                    <BaseButton color="light-light"> Вход</BaseButton>
+                </a>
+            </div>
+
         </div>
+    </div>
 </template>
 
 <script setup>
-    import BaseButton from "@/components/button/BaseButton.vue"
+import BaseButton from "@/components/button/BaseButton.vue"
+
+import { ref } from 'vue';
+
+const value = ref(null);
+const value2 = ref(null);
 </script>
 
 <style lang="scss" scoped>
-    
-.rectangle{
+.rectangle {
     position: relative;
     width: 480px;
     height: 340px;
@@ -40,7 +42,7 @@
     top: 24vh;
 }
 
-.grid{
+.grid {
     display: grid;
     grid-template-columns: 1fr 2fr;
     grid-template-rows: 3fr 1fr;
@@ -55,41 +57,38 @@
     margin: 30px;
 }
 
-.input_block{
+.input_block {
     margin-top: 40px;
 }
 
 input {
-    padding:10px;
-    margin:15px 0;
-    border-radius:5px;
+    padding: 10px;
+    margin: 15px 0;
+    border-radius: 5px;
     outline: 0;
 
-    border: 1px solid var(--primary-light);
-    &:active{
-        border: 1px solid var(--primary);
-    }
 }
 
-.registration{
+.registration {
     border: 0;
     color: black;
     background: white;
     margin-left: 14px;
     margin-top: 10px;
-    text-decoration:underline;
+    text-decoration: underline;
 
     cursor: pointer;
 }
 
-.label{
+.label {
     margin-left: 20px;
 }
 
-.button{
+.button {
     width: 100px;
     height: 40px;
     margin-left: 100px;
     margin-top: 20px;
+    grid-column: 2;
 }
 </style>

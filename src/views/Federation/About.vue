@@ -1,17 +1,17 @@
 <template>
     <div class="wrapper">
         <div class="field">Название организации</div>
-        <div class="info" id="name">Региональная физкультурно-спортивная общественная организация «Спортивная федерация спортивного ориентирования СанктПетербурга»</div>
+        <div class="info" id="name">Общественная организация "Региональная спортивная федерация спортивного ориентирования Ленинградской области"</div>
 
         <Divider class="Divider"></Divider>
 
         <div class="field">ОГРН</div>
-        <div class="info" id="OGRN">1187800004160</div>
+        <div class="info" id="OGRN">1094700000097</div>
 
         <Divider class="Divider"></Divider>
 
         <div class="field">ИНН</div>
-        <div class="info" id="INN">7813617628</div>
+        <div class="info" id="INN">4703110935</div>
 
         <Divider class="Divider"></Divider>
 
@@ -21,7 +21,7 @@
         <Divider class="Divider"></Divider>
 
         <div class="field">Код спорта</div>
-        <div class="info" id="sportCode">12345678901</div>
+        <div class="info" id="sportCode">0830011811Я</div>
 
         <Divider class="Divider"></Divider>
 
