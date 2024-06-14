@@ -6,17 +6,22 @@ import Request from '@/views/Committee/Request.vue'
 import AboutC from '@/views/Committee/About.vue'
 import RequestsC from '@/views/Committee/RequestsC.vue'
 
-// import Trainer from '@/views/Committee/Requests/Trainer.vue'
-// import Sportsman from '@/views/Committee/Requests/Sportsman.vue'
-// import Judge from '@/views/Committee/Requests/Judge.vue'
-import CalPlan from '@/views/Committee/CalPlan.vue'
+import Accreditation  from '@/views/Federation/Requests/Accreditation.vue'
+import Trainer        from '@/views/Federation/Requests/Trainer.vue'
+import Sportsman      from '@/views/Federation/Requests/Sportsman.vue'
+import Judge          from '@/views/Federation/Requests/Judge.vue'
+
+import AccreditationDoc from '@/views/Federation/Docs/AccreditationDoc.vue'
+import SportsmanDoc     from '@/views/Federation/Docs/SportsmanDoc.vue'
+import TrainerDoc       from '@/views/Federation/Docs/TrainerDoc.vue'
+import JudgeDoc         from '@/views/Federation/Docs/JudgeDoc.vue'
+//import CalPlan        from '@/views/Committee/CalPlan.vue'
 
 
 import AboutF from '@/views/Federation/About.vue'
 import Members from '@/views/Federation/Members.vue'
 import Table from '@/views/Federation/Table.vue'
 import RequestsF from '@/views/Federation/Requests.vue'
-import Accreditation from '@/views/Federation/Requests/Accreditation.vue'
 import CreateDocF from '@/views/Federation/CreateDoc.vue'
 
 import Autorization from '@/views/Autorization/Autorization.vue'
@@ -24,7 +29,7 @@ import Autorization from '@/views/Autorization/Autorization.vue'
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    {
+    { // дефолт
       path: '/',
       name: 'home',
       component: MainPage
@@ -88,6 +93,41 @@ const router = createRouter({
       path: '/Federation/Accreditation',
       name: 'Accreditation',
       component: Accreditation
+    },
+    {
+      path: '/Federation/Trainer',
+      name: 'Trainer',
+      component: Trainer
+    },
+    {
+      path: '/Federation/Sportsman',
+      name: 'Sportsman',
+      component: Sportsman
+    },
+    {
+      path: '/Federation/Judge',
+      name: 'Judge',
+      component: Judge
+    },
+    {
+      path: '/Federation/TrainerDoc',
+      name: 'TrainerDoc',
+      component: TrainerDoc
+    },
+    {
+      path: '/Federation/JudgeDoc',
+      name: 'JudgeDoc',
+      component: JudgeDoc
+    },
+    {
+      path: '/Federation/AccreditationDoc',
+      name: 'AccreditationDoc',
+      component: AccreditationDoc
+    },
+    {
+      path: '/Federation/SportsmanDoc',
+      name: 'SportsmanDoc',
+      component: SportsmanDoc
     },
     {
       path: '/Federation/CreateDoc',

@@ -4,17 +4,16 @@
             <img src="@/assets/images/profile_icon.png" class="circle">
             <div class="input_block">
                 <FloatLabel>
-                    <InputText id="username" v-model="value" placeholder="Логин"/>
+                    <InputText id="username" v-model="login" placeholder="Логин"/>
                 </FloatLabel>
                 <FloatLabel>
-                    <InputText id="password" v-model="value2" placeholder="Пароль"/>
+                    <Password  id="password" v-model="password" placeholder="Пароль" :feedback="false"/>
                 </FloatLabel>
             </div>
             <div class="button">
-                <a href="/">
-                    <BaseButton color="light-light"> Вход</BaseButton>
-                </a>
+                <BaseButton color="light" @click="Autorization()"> Вход</BaseButton>
             </div>
+
 
         </div>
     </div>
@@ -25,20 +24,45 @@ import BaseButton from "@/components/button/BaseButton.vue"
 
 import { ref } from 'vue';
 
-const value = ref(null);
-const value2 = ref(null);
+const login = ref(null);
+const password = ref(null);
+
+let CommitteeHeader = document.getElementById('CommitteeHeader'); 
+let FederationHeader = document.getElementById('FederationHeader'); 
+let FederationSidebar = document.getElementById('FederationSidebar'); 
+let CommitteeSidebar = document.getElementById('CommitteeSidebar'); 
+CommitteeHeader.style.display = "none";
+FederationHeader.style.display = "none";
+CommitteeSidebar.style.display = "none";
+FederationSidebar.style.display = "none";
+console.log(CommitteeHeader);
+
+
+function Autorization() { 
+    let passwordElem = document.getElementById('password'); 
+
+    console.log(passwordElem)
+
+        if(password.value == "123" && login.value == "Orient")
+            window.location.replace("http://localhost:5173/Federation")
+        else if(password.value == "123" && login.value == "Committee")
+            window.location.replace("http://localhost:5173/Committee")
+        
+
+    }
 </script>
 
 <style lang="scss" scoped>
 .rectangle {
+    z-index: 20;
     position: relative;
     width: 480px;
-    height: 340px;
+    height: 300px;
     border-radius: 7px;
     background: white;
     box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 30%;
+    margin-right: 30%;
     top: 24vh;
 }
 
@@ -88,7 +112,6 @@ input {
     width: 100px;
     height: 40px;
     margin-left: 100px;
-    margin-top: 20px;
     grid-column: 2;
 }
 </style>

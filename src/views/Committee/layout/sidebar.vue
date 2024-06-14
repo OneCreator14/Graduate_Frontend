@@ -5,7 +5,7 @@ const links = ref([
     {name: 'Участники федерации', href: '/Committee/membersf'},
     {name: 'Сотрудники комитета', href: '/Committee/membersc'},
     {name: 'Заявки',              href: '/Committee/requests'},
-    {name: 'Календарный план',    href: '/Committee/calplan'},
+    //{name: 'Календарный план',    href: '/Committee/calplan'},
     {name: 'Об организации',      href: '/Committee/about'},
 ])
 
@@ -15,7 +15,7 @@ const links = ref([
     <div class="sidebar">
         <router-link 
         class="sidebar_link"
-            v-for="link in links.slice(0, 4)"
+            v-for="link in links.slice(0, 3)"
             :key="link.name"
             :to="link.href"
         >
@@ -24,14 +24,14 @@ const links = ref([
         <Divider class="Divider"></Divider>
         <router-link 
         class="sidebar_link"
-            v-for="link in links.slice(4, 10)"
+            v-for="link in links.slice(3, 10)"
             :key="link.name"
             :to="link.href"
         >
             {{ link.name }}
         </router-link>
 
-        <img src="@/assets/images/Sport.png" width="250" style="margin-top: 500px; margin-left: -35px;"/>
+        <img src="@/assets/images/Sport.png" width="350" style="display: block; margin-top: 470px; margin-left: -75px;"/>
             
     </div>
 </template>

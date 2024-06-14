@@ -1,15 +1,205 @@
 <template>
-    <div>
+    
+    <div class="wrapper">
+        <h3 class="block">Создание заявления</h3>
+        <div class="back">
+            <h2 style="text-align: center; margin-bottom: 60px">
+                Создание заявления о предоставлении государственной услуги "Присвоение квалификационных категорий тренеров"
+            </h2>
+            <h3 style="margin-top: 0;">Список необходимых документов:</h3>
+            
+            <!--
+            <form id="formElem" @submit.prevent="sendToTable">
+                <input type="text" name="name" value="John">
+                <input type="text" name="surname" value="Smith">
+                <input type="submit">
+            </form>
+            -->
 
+            <div v-for="(doc, index) in docs" :key="doc.name" class="list">
+                <div class="info">
+                        {{doc.name}}
+                </div>
+
+                <div class="filename" :id="'filename'+index">
+                    <span>{{ doc.filename }}</span>
+                </div>
+
+                <form action="http://localhost:5173/Federation/CreateDoc">
+                    <BaseButton 
+                        v-if="doc.isAdded" 
+                        class="addBtn" 
+                        size="small" 
+                        color="green"
+                        > 
+                            <div class="pi pi-file"/>
+                    </BaseButton>
+                </form>
+
+                <BaseButton  
+                    size="small" 
+                    class="upldiadBtn"
+                    @click="FindFile(index)"> 
+                        <div class="pi pi-upload"/> 
+                </BaseButton>
+
+                <form action="view/upload.php" target="rFrame" method="POST" enctype="multipart/form-data">                 
+                    <div class="hiddenInput">
+                        <input type="file"   :id="'my_hidden_file'+index" name="loadfile" @change="LoadFile(index)">  
+                        <input type="submit" :id="'my_hidden_load'+index" style="display: none" value='Загрузить'>  
+                    </div>
+                </form>
+
+                <Divider class="Divider"></Divider>
+            </div>
+
+            <BaseButton 
+            id="send"
+            disabled>
+                Отправить
+            </BaseButton>
+
+
+        </div>
     </div>
 </template>
 
-<script>
-    export default {
-        
+<script setup>
+    import BaseButton from "@/components/button/BaseButton.vue"
+    import { ref } from "vue";
+
+    const disabled = ref(false);
+
+    const docs = [
+        { name: "Заявление о присвоении квалификационной категории тренеру", isAdded: true, id: 0},
+        { name: "Копии второй и третьей страниц паспорта гражданина, а также страниц, содержащих сведения о его месте жительства",  id: 1},
+        { name: "Копия протокола или выписка из протокола официального спортивного мероприятия", id: 2},
+        { name: "Копия акта, подтверждающего включение лица, в список кандидатов в сборную команду", id: 3},
+        { name: "Копия трудовой книжки, заверенная подписью руководителя и печатью организации", isUnnecessary: true, id: 4},
+        { name: "Копия документа, подтверждающего присвоение квалификационной категории", isUnnecessary: true, id: 5},
+        { name: "Копия документа, удостоверяющего принадлежность лица к спортивной федерации, заверенная подписью руководителя и печатью организации", isUnnecessary: true, id: 6},
+        { name: "Выписка из приказа о зачислении спортсмена в тренировочную группу тренера, заверенная подписью руководителя и печатью организации", isUnnecessary: true, id: 7},
+        { name: "Копия приказа о присвоении спортивного разряда спортсмену, заверенная подписью руководителя и печатью организации", isUnnecessary: true, id: 8},
+        { name: "Выписка из приказа о переводе лица, проходящего спортивную подготовку, на следующий этап спортивной подготовки, заверенная подписью руководителя и печатью организации", isUnnecessary: true, id: 9},
+        { name: "Копия распорядительного акта, подтверждающего включение лица, проходящего спортивную подготовку или спортсмена, в список кандидатов в спортивную сборную команду", isUnnecessary: true, id: 10},
+        { name: "Копия документа об участии тренера в семинарах, конференциях, открытых занятиях, мастер-классах и иных научно-практических мероприятиях" , isUnnecessary: true, id: 11},
+        { name: "Копия документа, подтверждающего присвоение почетных спортивных званий и(или) ведомственных наград, поощрений за период профессиональной деятельности тренера" , isUnnecessary: true, id: 12},
+        { name: "Копии методических разработок (публикаций)" , isUnnecessary: true, id: 13}
+        ]
+
+    function FindFile(index) { 
+        document.getElementById('my_hidden_file'+index).click(); 
     }
+
+    function LoadFile(index) { 
+        var fileInput = document.getElementById('my_hidden_file'+index);   
+        var filename = document.getElementById('filename'+index);   
+        var newFilename = fileInput.files[0].name;
+        filename.innerText = newFilename;
+        document.getElementById('my_hidden_load'+index).click(); 
+    }  
+
+    async function sendToTable($event) {
+        let response = await fetch('http://localhost:5000/api/test', {
+            method: 'post',
+            body: JSON.stringify("123"),
+    });
+
+    let result = await response.json();
+
+    alert(result.message);
+    };
+
 </script>
 
 <style lang="scss" scoped>
+.list{
+    display: grid;
+    grid-column-gap: 10px;
+    grid-template-columns: 1fr 150px 50px 50px;
+}
+.Divider{
+    width: 100%;
+}
+
+.wrapper{
+    background: var(--background-secondary);
+    padding: 30px;
+ } 
+ 
+ .block{
+    position: relative;
+    z-index: 2;
+    background: var(--background-primary);
+    line-height: 30px;  
+    margin: 0;
+    width: fit-content;
+    border-radius: 7px 7px 0 0;
+    box-shadow: 0px -5px 5px 1px rgba(0, 0, 0, 0.1);
+    background: var(--background-primary);
+    padding: 20px;
+ }
+ 
+ .back{
+    z-index: 1;
+    background: var(--background-primary);
+    margin-top: -5px;
+    width: 1200px;
+    border-radius: 7px;
+    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+ }
+
+.info{
+    display:grid;
+    align-items: center;
+    grid-column: 1;
+    max-width: 700px;
+}
+.filename{
+    display: grid;
+    align-items: center;
+    grid-column: 2;
+    min-height: 40px;
+    justify-self: end;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow:hidden;
+    max-width: 200px;
+    margin-right: 20px;
+}
+.addBtn{
+    grid-column: 3;
+    justify-self: end;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 40px;
+    width: 40px;
+}
+.upldiadBtn{
+    grid-column: 4;
+    justify-self: end;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 40px;
+    width: 40px;
+}
+
+.Divider{
+    grid-column: span 4;
+    margin: 0.7rem;
+}
+
+#send{
+    margin-left: 990px;
+}
+
+.hiddenInput{  
+      position:absolute;
+      overflow: hidden;
+      display:block;  
+      height:0px;  
+      width:0px;  
+  }
 
 </style>

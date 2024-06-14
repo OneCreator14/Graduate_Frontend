@@ -1,6 +1,7 @@
 <template>
     <header class="header">
         <img src="@/assets/images/icon.png" class="title" width="70"/>
+        <div class="organisation">Комитет по физической культуре и спорту Лен. области</div>
         <div class="user_menu">
             <!--<div class="header_divider"></div>-->
             <img src="@/assets/images/profile_icon.png" class="user_icon inl_block" />
@@ -11,7 +12,7 @@
                     <span>Профиль </span>
                     <InputIcon class="pi pi-angle-right" />
                 </a>
-                <a href="#" class="out">
+                <a href="/autorization" class="out">
                     <span class="inl_block">Выйти</span>
                     <InputIcon class="pi pi-sign-out inl_block" />
                 </a>
@@ -32,6 +33,12 @@
     display: flex;
     position: sticky;
     top: 0;
+}
+
+.organisation{
+    margin-left: 200px;
+    margin-top: 16px;
+    font-size: 25px;
 }
 
 .user_menu {

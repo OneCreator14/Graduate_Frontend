@@ -16,12 +16,9 @@
         </div>
         
 
-        <DataTable class="DataTable" :value="array" tableStyle="min-width: 50rem">
-            <Column field="product" header="Услуга"></Column>
-            <Column field="dateStart" header="Дата начала"></Column>
-            <Column field="dateEnd" header="Дата окончания"></Column>
-            <Column field="status" header="Статус"></Column>
-        </DataTable>
+        <TableElem :requests="requests">
+        </TableElem>
+
 
             <!-- Всплывающее окно -->
 
@@ -36,48 +33,17 @@
 
 <script setup>
 import BaseButton from "@/components/button/BaseButton.vue"
-
+import TableElem from "@/components/table/TableElem.vue"
 import { ref } from "vue";
 import router from "@/router";
 
-var array = [
-    {
-    product : "Аккредитация спортивной федерации",
-    dateStart: "11.02.2023",
-    dateEnd: "02.05.2023",
-    status: "Проверка документов"
-    },
-    {
-    product : "Присвоение спортивного разряда",
-    dateStart: "11.02.2022",
-    dateEnd: "11.03.2022",
-    status: "Обработано"
-    },
-    {
-    product : "Присвоение судейской категории",
-    dateStart: "24.02.2023",
-    dateEnd: "10.04.2023",
-    status: "Принятие решения"
-    }]; 
+var requests = [
+  { id: 1, stage: "Рассмотрение документов", deadline: "12 дней", service: "Государственная аккредитация спортивной федерации", startDate: "21.04.2024", applicant: "Федерация спортивного ориентирования", endDate: "21.07.2024" },
+  { id: 2, stage: "Ожидает подписания председателем", deadline: "61 день", service: "Присвоение судейской категории", startDate: "02.02.2024", applicant: "Федерация спортивного ориентирования", endDate: "02.05.2024" },
+  { id: 3, stage: "Созыв комиссии", deadline: "61 день", service: "Присвоение судейской категории", startDate: "02.02.2024", applicant: "Федерация спортивного ориентирования", endDate: "02.05.2024" },
+]
 
-    // Всплывающее окно
-
-
-
-  const isVisible = ref(false);
-  const selectedProduct = ref(false);
-  const products = [
-    { name: "Аккредитация федерации",         id: 1},
-    { name: "Присвоение категории тренеру",   id: 2},
-    { name: "Присвоение спортивного разряда", id: 3},
-    { name: "Присвоение судейской категории", id: 4},
-  ]
-
-  const temp = () => {
-    isVisible.value = true; 
-  }
-
-  const goRequest = () =>{
+const goRequest = () =>{
     isVisible.value = false;
     switch (selectedProduct.value.id){
       case 1:
@@ -97,6 +63,46 @@ var array = [
     }
 
   }
+
+var array = [
+  {
+    author: "Федерация спортивного ориентирования",
+    product: "Государственная аккредитация региональных спортивных федераций Ленинградской области",
+    dateStart: "11.02.2023",
+    dateEnd: "02.05.2023",
+    status: "Проверка документов"
+  },
+  {
+    author: "Федерация бокса",
+    product: "Присвоение спортивного разряда",
+    dateStart: "11.02.2022",
+    dateEnd: "11.03.2022",
+    status: "Обработано"
+  },
+  {
+    author: "Федерация биатлона",
+    product: "Присвоение судейской категории",
+    dateStart: "24.02.2023",
+    dateEnd: "10.04.2023",
+    status: "Принятие решения"
+  }];
+
+  const temp = () => {
+    isVisible.value = true; 
+  }
+
+
+
+
+const isVisible = ref(false);
+const selectedProduct = ref(false);
+const products = [
+  { name: "Аккредитация федерации", id: 1 },
+  { name: "Присвоение категории тренеру", id: 2 },
+  { name: "Присвоение спортивного разряда", id: 3 },
+  { name: "Присвоение судейской категории", id: 4 },
+]
+
 </script>
 
 <style lang="scss" scoped>
@@ -106,7 +112,7 @@ var array = [
 
  #add{
     margin-left: auto; 
-    margin-right: 0;  
+    margin-right: 530px;  
  }
 
  #search{

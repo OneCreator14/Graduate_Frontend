@@ -32,7 +32,7 @@
                         size="small" 
                         color="green"
                         > 
-                            <div class="pi pi-plus"/>
+                            <div class="pi pi-file"/>
                     </BaseButton>
                 </form>
 
@@ -71,7 +71,6 @@
     const disabled = ref(false);
 
     const docs = [
-        { name: "Заявление о предоставлении государственной услуги", id: 0},
         { name: "Заявление о государственной аккредитации",  isAdded: true, id: 1},
         { name: "Перечень лиц, являющихся членами спортивной федерации", id: 2},
         { name: "Сведения о персональном составе руководящих органов спортивной федерации", id: 3},
@@ -173,12 +172,16 @@
     justify-self: end;
     padding-left: 10px;
     padding-right: 10px;
+    height: 40px;
+    width: 40px;
 }
 .upldiadBtn{
     grid-column: 4;
     justify-self: end;
     padding-left: 10px;
     padding-right: 10px;
+    height: 40px;
+    width: 40px;
 }
 
 .Divider{

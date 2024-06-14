@@ -23,6 +23,7 @@ import Dialog from 'primevue/dialog';
 import Button from "primevue/button";
 import Calendar from 'primevue/calendar';
 import Textarea from 'primevue/textarea';
+import Password from 'primevue/password';
 
 import 'primevue/resources/themes/saga-blue/theme.css'
 import 'primevue/resources/primevue.min.css'
@@ -52,5 +53,6 @@ app.component('Dialog', Dialog);
 app.component('Button', Button);
 app.component('Calendar', Calendar);
 app.component('Textarea', Textarea);
+app.component('Password', Password);
 
 app.mount("#app");
