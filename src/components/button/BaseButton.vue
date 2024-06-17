@@ -92,19 +92,19 @@ const clickOnButton = () => {
     }
   }
   &_green {
-    background: var(--green);
-    border: 2px solid var(--green);
+    background: var(--green-default);
+    border: 2px solid var(--green-default);
     &:enabled:hover{
-      background: var(--green);
-      border-color: var(--green);
+      background: var(--green-light);
+      border-color: var(--green-light);
     }
   }
   &_red {
-    background: var(--red);
-    border: 2px solid var(--red);
+    background: var(--red-default);
+    border: 2px solid var(--red-default);
     &:enabled:hover{
-      background: var(--red);
-      border-color: var(--red);
+      background: var(--red-light);
+      border-color: var(--red-light);
     }
   }
 

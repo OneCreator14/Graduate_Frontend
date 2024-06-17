@@ -9,32 +9,43 @@
       </IconField>
     </div>
 
-
-    <TableElem :requests="requests">
-      <template v-slot:button>
-        <BaseButton size="small" :outlined="true">
-          <span>Перейти</span>
-          <InputIcon class="pi pi-angle-right arrow inl_block" />
-        </BaseButton>
-      </template>
-    </TableElem>
+    <div class="table">
+      <div class="tittle">
+        <div>№</div>
+        <div>Текущая стадия услуги</div>
+        <div>Оставшееся время</div>
+      </div>
 
 
 
+      <div class="tableElem" v-for="request in requests" v-bind:key="request.id">
+        <div class="header">
 
-    <!-- <DataTable class="DataTable" :value="array" tableStyle="min-width: 50rem">
-            <Column field="author" header="Заявитель"></Column>
-            <Column field="product" header="Услуга"></Column>
-            <Column field="dateStart" header="Дата начала"></Column>
-            <Column field="dateEnd" header="Дата окончания"></Column>
-            <Column field="status" header="Статус"></Column>
+          <div class="grid_item">{{ request.id }}</div>
+          <div class="grid_item">{{ request.stage }}</div>
+          <div class="grid_item">{{ request.deadline }}</div>
 
-            <Column :exportable="false"  style="width: 10rem">
-                    <template #body="">
-                        <Button icon="pi pi-angle-right" @click="goRequest" outlined rounded class="mr-2" />
-                    </template>
-            </Column>
-        </DataTable> -->
+        </div>
+
+        <div class="body">
+          <div>Услуга: </div>
+          <div>{{ request.service }}</div>
+          <div>Дата составления заявления: </div>
+          <div>{{ request.startDate }}</div>
+          <div>Заявитель: </div>
+          <div>{{ request.applicant }}</div>
+          <div>Необходимо рассмотреть до: </div>
+          <div>{{ request.endDate }}</div>
+        </div>
+
+        <div class="footer">
+          <BaseButton size="small" :outlined="true" @click="DoRequest(request)">
+            <span>Перейти</span>
+            <InputIcon class="pi pi-angle-right arrow inl_block" />
+          </BaseButton>
+        </div>
+      </div>
+    </div>
   </div>
 
 </template>
@@ -42,43 +53,16 @@
 <script setup>
 import { ref } from "vue";
 import router from "@/router";
-import TableElem from "@/components/table/TableElem.vue"
 import BaseButton from "@/components/button/BaseButton.vue"
 
 var requests = [
-  { id: 1, stage: "Рассмотрение документов", deadline: "12 дней", service: "Государственная аккредитация спортивной федерации", startDate: "21.04.2024", applicant: "Федерация спортивного ориентирования", endDate: "21.07.2024" },
-  { id: 2, stage: "Созыв комиссии", deadline: "61 день", service: "Присвоение судейской категории", startDate: "02.02.2024", applicant: "Федерация биатлона", endDate: "02.05.2024" },
-  { id: 3, stage: "Созыв комиссии", deadline: "61 день", service: "Присвоение судейской категории", startDate: "02.02.2024", applicant: "Федерация биатлона", endDate: "02.05.2024" },
-  { id: 3, stage: "Созыв комиссии", deadline: "61 день", service: "Присвоение судейской категории", startDate: "02.02.2024", applicant: "Федерация биатлона", endDate: "02.05.2024" },
+  { id: 1, stage: "Созыв комиссии", deadline: "12 дней", service: "Государственная аккредитация спортивной федерации", startDate: "21.04.2024", applicant: "Федерация спортивного ориентирования", endDate: "21.07.2024" },
+  { id: 2, stage: "Рассмотрение документов", deadline: "61 день", service: "Присвоение спортивного разряда", startDate: "17.06.2024", applicant: "Федерация спортивного ориентирования", endDate: "18.08.2024" },
 ]
 
 const goRequest = () => {
   router.push('/reaqest');
 }
-
-var array = [
-  {
-    author: "Федерация спортивного ориентирования",
-    product: "Государственная аккредитация региональных спортивных федераций Ленинградской области",
-    dateStart: "11.02.2023",
-    dateEnd: "02.05.2023",
-    status: "Проверка документов"
-  },
-  {
-    author: "Федерация бокса",
-    product: "Присвоение спортивного разряда",
-    dateStart: "11.02.2022",
-    dateEnd: "11.03.2022",
-    status: "Обработано"
-  },
-  {
-    author: "Федерация биатлона",
-    product: "Присвоение судейской категории",
-    dateStart: "24.02.2023",
-    dateEnd: "10.04.2023",
-    status: "Принятие решения"
-  }];
-
 
 
 
@@ -90,9 +74,87 @@ const products = [
   { name: "Присвоение спортивного разряда", id: 3 },
   { name: "Присвоение судейской категории", id: 4 },
 ]
+
+function DoRequest(request){
+  window.location.replace("http://localhost:5173/Committee/Sportsman");
+}
 </script>
 
 <style lang="scss" scoped>
+$grid-border: 1px solid var(--primary-light-gray);
+
+.table {
+    background-color: var(--header-gray);
+    width: 1000px;
+
+}
+
+.tittle{
+    display: grid;
+    grid-template-columns: 1fr 15fr 400px;
+    text-align: center;
+    background-color: var(--header-gray);
+    border: #{$grid-border};
+    margin-bottom: 10px;
+}
+
+.tittle > div{
+    padding: 20px 0px;
+    border-right: #{$grid-border};
+    font-weight: 500;
+    font-size: 20px;
+
+    &:first-child{
+        font-size: 18px;
+        padding-left: 2px;
+        padding-top: 21px;
+    }
+}
+
+.tableElem {
+    width: 1000px;
+    height: 200px;
+    background-color: white;
+    border: #{$grid-border};
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
+}
+
+.header {
+    display: grid;
+    grid-template-columns: 1fr 15fr 400px;
+}
+
+.grid_item {
+    text-align: center;
+    padding: 10px;
+    background-color: white;
+    height: 100%;
+    width: 100%;
+    border-right: #{$grid-border};
+    border-bottom: #{$grid-border};
+
+    &:last-child {
+        border-right: none;
+    }
+}
+
+.body {
+    display: grid;
+    grid-template-columns: 90px auto 230px 150px;
+    background-color: white;
+    padding: 15px;
+
+    div {
+        padding: 10px;
+    }
+}
+
+.footer {
+    float: right;
+    padding-right: 20px;
+}
+
 .wrapper {
   margin: 60px;
 }

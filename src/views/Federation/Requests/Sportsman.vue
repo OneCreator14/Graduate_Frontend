@@ -1,5 +1,5 @@
 <template>
-    
+
     <div class="wrapper">
         <h3 class="block">Создание заявления</h3>
         <div class="back">
@@ -7,218 +7,234 @@
                 Создание заявления о предоставлении государственной услуги "Присвоение спортивных разрядов «кандидат в мастера спорта» и «первый спортивный разряд»"
             </h2>
             <h3 style="margin-top: 0;">Список необходимых документов:</h3>
-            
-            <!--
-            <form id="formElem" @submit.prevent="sendToTable">
-                <input type="text" name="name" value="John">
-                <input type="text" name="surname" value="Smith">
-                <input type="submit">
-            </form>
-            -->
 
-            <div v-for="(doc, index) in docs" :key="doc.name" class="list">
+            <div v-for="(doc, index) in docs" :key="doc.name" class="listElem">
                 <div class="info">
-                        {{doc.name}}
+                    {{ doc.name }}
                 </div>
 
-                <div class="filename" :id="'filename'+index">
-                    <span>{{ doc.filename }}</span>
+                <div class="upload" :id="'fileBack' + index">
+                    <div class="pi pi-file" :id="'fileicon' + index"
+                        style="font-size: 1.1rem; display: none; color: gray;" />
+                    <div class="filename" :id="'filename' + index" style="display: none;">
+                        <span>{{ doc.filename }}</span>
+                    </div>
+                    <button class="uploadBtn" :id="'fileBtn' + index" @click="FindFile(index)">
+                        <div class="pi pi-cloud-upload" style="font-size: 1.5rem" />
+                    </button>
                 </div>
 
-                <form action="http://localhost:5173/Federation/CreateDoc">
-                    <BaseButton 
-                        v-if="doc.isAdded" 
-                        class="addBtn" 
-                        size="small" 
-                        color="green"
-                        > 
-                            <div class="pi pi-file"/>
+
+
+                <form action="http://localhost:5173/Federation/SportsmanDoc" class="createPanel">
+                    <BaseButton v-if="doc.isAdded" class="createBtn" size="small" color="green">
+                        Создать
+                        <div class="pi pi-wrench" style="font-size: 1.3rem" />
                     </BaseButton>
                 </form>
 
-                <BaseButton  
-                    size="small" 
-                    class="upldiadBtn"
-                    @click="FindFile(index)"> 
-                        <div class="pi pi-upload"/> 
-                </BaseButton>
-
-                <form action="view/upload.php" target="rFrame" method="POST" enctype="multipart/form-data">                 
+                <form action="view/upload.php" target="rFrame" method="POST" enctype="multipart/form-data">
                     <div class="hiddenInput">
-                        <input type="file"   :id="'my_hidden_file'+index" name="loadfile" @change="LoadFile(index)">  
-                        <input type="submit" :id="'my_hidden_load'+index" style="display: none" value='Загрузить'>  
+                        <input type="file" :id="'my_hidden_file' + index" name="loadfile" @change="LoadFile(index)">
+                        <input type="submit" :id="'my_hidden_load' + index" style="display: none" value='Загрузить'>
                     </div>
                 </form>
 
-                <Divider class="Divider"></Divider>
             </div>
 
-            <div class="error" id="error">
-                Не все документы загружены
+            <!-- При необходимости -->
+
+            <h3 style="margin-top: 30px;">При наличии:</h3>
+            <div v-for="(doc, index) in unnecessaryDocs" :key="doc.name" class="listElem">
+                <div class="info">
+                    {{ doc.name }}
+                </div>
+
+                <div class="upload" :id="'fileBack' + index">
+                    <div class="pi pi-file" :id="'fileicon' + index"
+                        style="font-size: 1.1rem; display: none; color: gray;" />
+                    <div class="filename" :id="'filename' + index" style="display: none;">
+                        <span>{{ doc.filename }}</span>
+                    </div>
+                    <button class="uploadBtn" :id="'fileBtn' + index" @click="FindFile(index)">
+                        <div class="pi pi-cloud-upload" style="font-size: 1.5rem" />
+                    </button>
+                </div>
+
+                <form action="view/upload.php" target="rFrame" method="POST" enctype="multipart/form-data">
+                    <div class="hiddenInput">
+                        <input type="file" :id="'my_hidden_file' + index" name="loadfile" @change="LoadFile(index)">
+                        <input type="submit" :id="'my_hidden_load' + index" style="display: none" value='Загрузить'>
+                    </div>
+                </form>
+
             </div>
 
-            <BaseButton 
-            id="send"
-            @click="Complete()">
-                Подтвердить
+
+
+            <BaseButton id="send">
+                Отправить
             </BaseButton>
-
 
         </div>
     </div>
 </template>
 
 <script setup>
-    import BaseButton from "@/components/button/BaseButton.vue"
-    import { ref } from "vue";
+import BaseButton from "@/components/button/BaseButton.vue"
+import { ref } from "vue";
 
-    const disabled = ref(false);
+const disabled = ref(false);
 
-    const docs = [
+const docs = [
         { name: "Представление на присвоение спортивного разряда", isAdded: true, isLoaded: false, id: 0},
         { name: "Копия протокола, отражающего выполнение спортивных норм", isLoaded: false, id: 1},
         { name: "Копия справки о составе и квалификации судейской коллегии", isLoaded: false, id: 2},
         { name: "Фотография кандидата на присвоение спортивного разряда", isLoaded: false, id: 3},
         { name: "Копия документа, удостоверяющего принадлежность спортсмена к федерации спорта", isLoaded: false, id: 4},
         { name: "Копия положения о физкультурном мероприятии, на котором спортсмен выполнил нормы", isLoaded: false, id: 5},
-        { name: "копия документа, подписанного главным судьей, содержащего сведения о количестве стран или субъектов РФ, принявших участие в соответствующем соревновани", isLoaded: false, id: 6},
+        { name: "Копия документа, подписанного главным судьей, содержащего сведения о количестве стран или субъектов РФ, принявших участие в соответствующем соревновани", isLoaded: false, id: 6},
         ]
 
-    function FindFile(index) { 
-        document.getElementById('my_hidden_file'+index).click(); 
-    }
+function FindFile(index) {
+    document.getElementById('my_hidden_file' + index).click();
+}
 
-    function LoadFile(index) { 
-        var fileInput = document.getElementById('my_hidden_file'+index);   
-        var filename = document.getElementById('filename'+index);   
-        var newFilename = fileInput.files[0].name;
-        filename.innerText = newFilename;
+function LoadFile(index) {
+    var fileInput = document.getElementById('my_hidden_file' + index);
+    var filename = document.getElementById('filename' + index);
+    var fileicon = document.getElementById('fileicon' + index);
+    var fileBtn = document.getElementById('fileBtn' + index);
+    var fileBack = document.getElementById('fileBack' + index);
 
-        docs[index].isLoaded = true;
+    var newFilename = fileInput.files[0].name;
 
-        document.getElementById('my_hidden_load'+index).click(); 
-    }  
+    filename.innerText = newFilename;
+    fileicon.style.display = "inline-block";
+    filename.style.display = "inline-block";
+    fileBtn.style.display = "none";
+    fileBack.style.backgroundColor = "#dff2ef";
 
-    function Complete() { 
-        for(let i = 0; i < 6; i++){
-            if(docs[i].isLoaded == false){
-                var error = document.getElementById('error');
-                error.style.display = "block";
-                return;
-            }
-        }
+    document.getElementById('my_hidden_load' + index).click();
+}
 
-        // отправить
-    }  
-
-    async function sendToTable($event) {
-        let response = await fetch('http://localhost:5000/api/test', {
-            method: 'post',
-            body: JSON.stringify("123"),
+async function sendToTable($event) {
+    let response = await fetch('http://localhost:5000/api/test', {
+        method: 'post',
+        body: JSON.stringify("123"),
     });
 
     let result = await response.json();
 
     alert(result.message);
-    };
+};
 
 </script>
 
 <style lang="scss" scoped>
-.list{
+.listElem {
     display: grid;
     grid-column-gap: 10px;
-    grid-template-columns: 1fr 150px 50px 50px;
-}
-.Divider{
-    width: 100%;
+    grid-template-columns: 10fr 2fr 2fr;
+    width: 900px;
+    margin-bottom: 15px;
+    margin-left: 50px;
 }
 
-.wrapper{
+.wrapper {
     background: var(--background-secondary);
     padding: 30px;
- } 
- 
- .block{
+    display: block;
+    margin-left: 100px;
+}
+
+.block {
     position: relative;
     z-index: 2;
     background: var(--background-primary);
-    line-height: 30px;  
+    line-height: 30px;
     margin: 0;
     width: fit-content;
     border-radius: 7px 7px 0 0;
     box-shadow: 0px -5px 5px 1px rgba(0, 0, 0, 0.1);
     background: var(--background-primary);
     padding: 20px;
- }
- 
- .back{
+}
+
+.back {
     z-index: 1;
     background: var(--background-primary);
     margin-top: -5px;
-    width: 1200px;
+    width: 1010px;
     border-radius: 7px;
     box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
     padding: 40px;
- }
-
-.info{
-    display:grid;
-    align-items: center;
-    grid-column: 1;
-    max-width: 700px;
 }
-.filename{
+
+.info {
     display: grid;
     align-items: center;
-    grid-column: 2;
-    min-height: 40px;
+    grid-column: 1;
+    border: solid black 1px;
+    border-radius: 8px;
+    padding: 20px;
+
+    font-size: 18px;
+}
+
+.filename {
+    align-items: center;
     justify-self: end;
     text-overflow: ellipsis;
     white-space: nowrap;
-    overflow:hidden;
-    max-width: 200px;
-    margin-right: 20px;
+    overflow: hidden;
+    max-width: 80px;
 }
-.addBtn{
+
+.upload {
+    transition: background-color 0.5s;
+    padding: 20px;
+
+    text-align: center;
+    border: 2px dashed #d1b2d9;
+    border-radius: 10px;
+    background-color: #f2dfdf;
+
+    transition: background-color 0.5s;
+}
+
+.uploadBtn {
+    grid-column: 2;
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+
+    background: none;
+    border: none;
+
+}
+
+.createBtn {
     grid-column: 3;
-    justify-self: end;
-    padding-left: 10px;
-    padding-right: 10px;
-    height: 40px;
-    width: 40px;
-}
-.upldiadBtn{
-    grid-column: 4;
-    justify-self: end;
-    padding-left: 10px;
-    padding-right: 10px;
-    height: 40px;
-    width: 40px;
+    margin-top: 15px;
+    height: 60px;
+    width: 100px;
 }
 
-.Divider{
-    grid-column: span 4;
-    margin: 0.7rem;
+.createPanel {
+    margin-left: 15px;
 }
 
-#send{
-    margin-left: 990px;
+#send {
+    margin-top: 15px;
+    margin-left: 770px;
 }
 
-.hiddenInput{  
-      position:absolute;
-      overflow: hidden;
-      display:block;  
-      height:0px;  
-      width:0px;  
-  }
-
-.error{
-    color: red;
-    padding: 10px;
-    display: none;
-    font-size:larger;
+.hiddenInput {
+    position: absolute;
+    overflow: hidden;
+    display: block;
+    height: 0px;
+    width: 0px;
 }
-
 </style>

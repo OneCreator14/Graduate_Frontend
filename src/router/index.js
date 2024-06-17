@@ -2,15 +2,22 @@ import { createRouter, createWebHistory } from 'vue-router'
 import MainPage from '@/views/Committee/MainPage.vue'
 import MembersC from '@/views/Committee/MembersC.vue'
 import MembersF from '@/views/Committee/MembersF.vue'
-import Request from '@/views/Committee/Request.vue'
 import AboutC from '@/views/Committee/About.vue'
 import RequestsC from '@/views/Committee/RequestsC.vue'
 
+// создание заявки
+import AccreditationC  from '@/views/Committee/Requests/Accreditation.vue'
+import TrainerC        from '@/views/Committee/Requests/Trainer.vue'
+import SportsmanC      from '@/views/Committee/Requests/Sportsman.vue'
+import JudgeC          from '@/views/Committee/Requests/Judge.vue'
+
+// создание заявки
 import Accreditation  from '@/views/Federation/Requests/Accreditation.vue'
 import Trainer        from '@/views/Federation/Requests/Trainer.vue'
 import Sportsman      from '@/views/Federation/Requests/Sportsman.vue'
 import Judge          from '@/views/Federation/Requests/Judge.vue'
 
+// создание документа о предоставлении госуслуги
 import AccreditationDoc from '@/views/Federation/Docs/AccreditationDoc.vue'
 import SportsmanDoc     from '@/views/Federation/Docs/SportsmanDoc.vue'
 import TrainerDoc       from '@/views/Federation/Docs/TrainerDoc.vue'
@@ -56,13 +63,28 @@ const router = createRouter({
     },
     {
       path: '/Committee/accreditation',
-      name: 'Accreditation',
-      component: Accreditation
+      name: 'AccreditationC',
+      component: AccreditationC
     },
     {
-      path: '/Committee/request',
-      name: 'Request',
-      component: Request
+      path: '/Committee/Accreditation',
+      name: 'AccreditationC',
+      component: AccreditationC
+    },
+    {
+      path: '/Committee/Trainer',
+      name: 'TrainerC',
+      component: TrainerC
+    },
+    {
+      path: '/Committee/Sportsman',
+      name: 'SportsmanC',
+      component: SportsmanC
+    },
+    {
+      path: '/Committee/Judge',
+      name: 'JudgeC',
+      component: JudgeC
     },
     // {
     //   path: '/Committee/calplan',

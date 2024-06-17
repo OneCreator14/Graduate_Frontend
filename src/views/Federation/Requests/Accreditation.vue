@@ -6,42 +6,36 @@
             <h2 style="text-align: center; margin-bottom: 60px">
                 Создание заявления о предоставлении государственной услуги "Государственная аккредитация региональных спортивных федераций Ленинградской области"
             </h2>
-            <h3 style="margin-top: 0;">Список необходимых документов:</h3>
-            
-            <!--
-            <form id="formElem" @submit.prevent="sendToTable">
-                <input type="text" name="name" value="John">
-                <input type="text" name="surname" value="Smith">
-                <input type="submit">
-            </form>
-            -->
+            <h3 style="margin-top: 0; margin-left: 30px">Список необходимых документов:</h3>
 
-            <div v-for="(doc, index) in docs" :key="doc.name" class="list">
+            <div v-for="(doc, index) in docs" :key="doc.name" class="listElem">
                 <div class="info">
                         {{doc.name}}
                 </div>
 
-                <div class="filename" :id="'filename'+index">
-                    <span>{{ doc.filename }}</span>
+                <div class="upload" :id="'fileBack'+index">
+                    <div class="pi pi-file" :id="'fileicon'+index" style="font-size: 1.1rem; display: none; color: gray;"/>
+                    <div class="filename" :id="'filename'+index" style="display: none;">
+                        <span>{{ doc.filename }}</span>
+                    </div>
+                    <button
+                    class="uploadBtn"
+                    :id="'fileBtn'+index"
+                    @click="FindFile(index)"> 
+                        <div class="pi pi-cloud-upload" style="font-size: 1.5rem"/> 
+                    </button>
                 </div>
 
-                <form action="http://localhost:5173/Federation/CreateDoc">
+                <form action="http://localhost:5173/Federation/AccreditationDoc" class="createPanel">
                     <BaseButton 
                         v-if="doc.isAdded" 
-                        class="addBtn" 
+                        class="createBtn" 
                         size="small" 
                         color="green"
                         > 
-                            <div class="pi pi-file"/>
+                            Создать <div class="pi pi-wrench" style="font-size: 1.3rem"/>
                     </BaseButton>
                 </form>
-
-                <BaseButton  
-                    size="small" 
-                    class="upldiadBtn"
-                    @click="FindFile(index)"> 
-                        <div class="pi pi-upload"/> 
-                </BaseButton>
 
                 <form action="view/upload.php" target="rFrame" method="POST" enctype="multipart/form-data">                 
                     <div class="hiddenInput">
@@ -50,15 +44,13 @@
                     </div>
                 </form>
 
-                <Divider class="Divider"></Divider>
             </div>
 
             <BaseButton 
             id="send"
-            disabled>
+            >
                 Отправить
             </BaseButton>
-
 
         </div>
     </div>
@@ -93,8 +85,18 @@
     function LoadFile(index) { 
         var fileInput = document.getElementById('my_hidden_file'+index);   
         var filename = document.getElementById('filename'+index);   
+        var fileicon = document.getElementById('fileicon'+index);   
+        var fileBtn = document.getElementById('fileBtn'+index);  
+        var fileBack = document.getElementById('fileBack'+index);  
+
         var newFilename = fileInput.files[0].name;
+        
         filename.innerText = newFilename;
+        fileicon.style.display = "inline-block";
+        filename.style.display = "inline-block";
+        fileBtn.style.display = "none";
+        fileBack.style.backgroundColor = "#dff2ef";
+
         document.getElementById('my_hidden_load'+index).click(); 
     }  
 
@@ -112,18 +114,20 @@
 </script>
 
 <style lang="scss" scoped>
-.list{
+.listElem{
     display: grid;
     grid-column-gap: 10px;
-    grid-template-columns: 1fr 150px 50px 50px;
-}
-.Divider{
-    width: 100%;
+    grid-template-columns: 10fr 2fr 2fr;
+    width: 900px;
+    margin-bottom: 15px;
+    margin-left: 50px;
 }
 
 .wrapper{
     background: var(--background-secondary);
     padding: 30px;
+    display: block;
+    margin-left: 100px;
  } 
  
  .block{
@@ -143,7 +147,7 @@
     z-index: 1;
     background: var(--background-primary);
     margin-top: -5px;
-    width: 1200px;
+    width: 1010px;
     border-radius: 7px;
     box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
     padding: 40px;
@@ -153,44 +157,58 @@
     display:grid;
     align-items: center;
     grid-column: 1;
-    max-width: 700px;
+    border: solid black 1px;
+    border-radius: 8px;
+    padding: 20px;
+    
+    font-size: 18px;
 }
 .filename{
-    display: grid;
     align-items: center;
-    grid-column: 2;
-    min-height: 40px;
     justify-self: end;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow:hidden;
-    max-width: 200px;
-    margin-right: 20px;
-}
-.addBtn{
-    grid-column: 3;
-    justify-self: end;
-    padding-left: 10px;
-    padding-right: 10px;
-    height: 40px;
-    width: 40px;
-}
-.upldiadBtn{
-    grid-column: 4;
-    justify-self: end;
-    padding-left: 10px;
-    padding-right: 10px;
-    height: 40px;
-    width: 40px;
+    max-width: 80px;
 }
 
-.Divider{
-    grid-column: span 4;
-    margin: 0.7rem;
+.upload{
+    transition: background-color 0.5s;
+    padding: 20px;
+
+    text-align: center;
+    border: 2px dashed #d1b2d9;
+    border-radius: 10px;
+    background-color: #f2dfdf;
+
+    transition: background-color 0.5s;
+}
+
+.uploadBtn{
+    grid-column: 2;
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+
+    background: none;
+    border: none;
+
+}
+
+.createBtn{
+    grid-column: 3;
+    margin-top: 15px;
+    height: 60px;
+    width: 100px;
+}
+
+.createPanel{
+    margin-left: 15px;
 }
 
 #send{
-    margin-left: 990px;
+    margin-top: 15px;
+    margin-left: 770px;
 }
 
 .hiddenInput{  
