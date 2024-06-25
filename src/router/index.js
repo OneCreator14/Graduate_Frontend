@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import MainPage from '@/views/Committee/MainPage.vue'
 import MembersC from '@/views/Committee/MembersC.vue'
 import MembersF from '@/views/Committee/MembersF.vue'
 import AboutC from '@/views/Committee/About.vue'
@@ -30,6 +29,8 @@ import Members from '@/views/Federation/Members.vue'
 import Table from '@/views/Federation/Table.vue'
 import RequestsF from '@/views/Federation/Requests.vue'
 import CreateDocF from '@/views/Federation/CreateDoc.vue'
+
+import SportsmanDes from '@/views/Committee/Decisions/SportsmanDes.vue'
 
 import Autorization from '@/views/Autorization/Autorization.vue'
 
@@ -85,6 +86,11 @@ const router = createRouter({
       path: '/Committee/Judge',
       name: 'JudgeC',
       component: JudgeC
+    },
+    {
+      path: '/Committee/SportsmanDes',
+      name: 'SportsmanDes',
+      component: SportsmanDes
     },
     // {
     //   path: '/Committee/calplan',

@@ -57,17 +57,17 @@ import { ref } from "vue";
 const disabled = ref(false);
 
 function back(){
-    window.location.replace("http://localhost:5173/Committee/requests");
+    window.location.replace("http://5.35.95.153:5173/Committee/requests");
 }
 
 function complete(){
     // занести изменения стадии в базу данных
-    window.location.replace("http://localhost:5173/Committee/requests");
+    window.location.replace("http://5.35.95.153:5173/Committee/requests");
 }
 
 function next(){
     // занести изменения в базу данных
-    window.location.replace("http://localhost:5173/Committee/decision");
+    window.location.replace("http://5.35.95.153:5173/Committee/decision");
 }
 
 const docs = [
@@ -91,7 +91,7 @@ function FindFile(index) {
 }
 
 async function sendToTable($event) {
-    let response = await fetch('http://localhost:5000/api/test', {
+    let response = await fetch('http://5.35.95.153:5000/api/test', {
         method: 'post',
         body: JSON.stringify("123"),
     });

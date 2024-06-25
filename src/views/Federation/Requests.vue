@@ -38,9 +38,8 @@ import { ref } from "vue";
 import router from "@/router";
 
 var requests = [
-  { id: 1, stage: "Рассмотрение документов", deadline: "12 дней", service: "Государственная аккредитация спортивной федерации", startDate: "21.04.2024", applicant: "Федерация спортивного ориентирования", endDate: "21.07.2024" },
-  { id: 2, stage: "Ожидает подписания председателем", deadline: "61 день", service: "Присвоение судейской категории", startDate: "02.02.2024", applicant: "Федерация спортивного ориентирования", endDate: "02.05.2024" },
-  { id: 3, stage: "Созыв комиссии", deadline: "61 день", service: "Присвоение судейской категории", startDate: "02.02.2024", applicant: "Федерация спортивного ориентирования", endDate: "02.05.2024" },
+  { id: 1, stage: "Ожидает подписания председателем", deadline: "12 дней", service: "Государственная аккредитация спортивной федерации", startDate: "21.04.2024", applicant: "Федерация спортивного ориентирования", endDate: "21.07.2024" },
+  { id: 2, stage: "Проверка документов", deadline: "91 день", service: "Присвоение спортивного разряда", startDate: "25.06.2024", applicant: "Федерация спортивного ориентирования", endDate: "25.09.2024" },
 ]
 
 const goRequest = () =>{
@@ -53,7 +52,7 @@ const goRequest = () =>{
         router.push('/Federation/Trainer');
         break;
       case 3:
-        router.push('/Federation/Sportsman');
+        router.push('/Federation/SportsmanDoc');
         break;
       case 4:
         router.push('/Federation/Judge');
@@ -73,18 +72,11 @@ var array = [
     status: "Проверка документов"
   },
   {
-    author: "Федерация бокса",
+    author: "Федерация спортивного ориентирования",
     product: "Присвоение спортивного разряда",
-    dateStart: "11.02.2022",
-    dateEnd: "11.03.2022",
-    status: "Обработано"
-  },
-  {
-    author: "Федерация биатлона",
-    product: "Присвоение судейской категории",
-    dateStart: "24.02.2023",
-    dateEnd: "10.04.2023",
-    status: "Принятие решения"
+    dateStart: "25.06.2024",
+    dateEnd: "25.09.2025",
+    status: "Проверка документов"
   }];
 
   const temp = () => {
@@ -98,9 +90,9 @@ const isVisible = ref(false);
 const selectedProduct = ref(false);
 const products = [
   { name: "Аккредитация федерации", id: 1 },
-  { name: "Присвоение категории тренеру", id: 2 },
   { name: "Присвоение спортивного разряда", id: 3 },
-  { name: "Присвоение судейской категории", id: 4 },
+  { name: "Присвоение судейской категории", id: 2 },
+  { name: "Присвоение категории тренера", id: 4 },
 ]
 
 </script>

@@ -26,7 +26,7 @@
 
 
 
-                <form action="http://localhost:5173/Federation/TrainerDoc" class="createPanel">
+                <form action="http://5.35.95.153:5173/Federation/TrainerDoc" class="createPanel">
                     <BaseButton v-if="doc.isAdded" class="createBtn" size="small" color="green">
                         Создать
                         <div class="pi pi-wrench" style="font-size: 1.3rem" />
@@ -129,7 +129,7 @@ function LoadFile(index) {
 }
 
 async function sendToTable($event) {
-    let response = await fetch('http://localhost:5000/api/test', {
+    let response = await fetch('http://5.35.95.153:5000/api/test', {
         method: 'post',
         body: JSON.stringify("123"),
     });

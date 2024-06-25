@@ -71,7 +71,7 @@ const products = [
 
 
 let xhr = new XMLHttpRequest();
-xhr.open('GET', 'http://localhost:5000/sportsmandoc', true);  //5.35.95.153
+xhr.open('GET', 'http://5.35.95.153:5000/sportsmandoc', true);  //5.35.95.153
 xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
 xhr.send();
 

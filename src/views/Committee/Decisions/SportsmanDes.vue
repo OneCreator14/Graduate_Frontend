@@ -45,17 +45,12 @@ const disabled = ref(false);
 const date = ref();
 
 const docs = [
-    { name: "Наименование спортивной организации, направляющей представление", id: 1, value: 'Региональная спортивная федерация спортивного ориентирования Ленинградской области' },
-    { name: "ФИО спортсмена", id: 2, value: "" },
-    { name: "Дата рождения", id: 3, isDate: true, value: "" },
-    { name: "Данные документа, удостоверяющего личность спортсмена", id: 4, value: "" },
-    { name: "Сведения об организации, осуществляющей деятельность в области физической культуры и спорта", id: 5, value: "Региональная спортивная федерация спортивного ориентирования Ленинградской области" },
-    { name: "Спортивный разряд", id: 5, value: "" },
-    { name: "Статус соревнований", id: 6, value: "" },
-    { name: "Вид спорта", id: 7, value: "Спортивное ориентирование" },
-    { name: "Наименование соревнований", id: 8, value: "" },
-    { name: "Результат спортсмена", id: 9, value: "" },
-    { name: "Президент федерации", id: 10, value: "Куприенко Д.В." },
+    { name: "Номер документа", id: 1, value: '' },
+    { name: "Спортивный разряд", id: 2, value: "" },
+    { name: "Председатель Комитета", id: 3, value: "Е.Н. Пономарев" },
+    { name: "ФИО спортсмена", id: 4, value: "" },
+    { name: "Вид спорта", id: 5, value: "" },
+    { name: "Муниципальный район", id: 6, value: "" }
 ]
 
 const selectedCity = ref();
@@ -97,8 +92,8 @@ xhr.onerror = function () {
 
 
 function send() {
-    SendReq("createrequest");
-    GetFile("Request.docx", "downloadrequest");
+    SendReq("createdecision");
+    GetFile("Decision.docx", "downloaddecision");
 }
 
 
@@ -127,17 +122,13 @@ function SendReq(adress) {
     finalDate.substring(0, 10);
     var data = JSON.stringify(
         {
-            federation: docs[0].value,
-            full_name: docs[1].value,
-            birth_date: finalDate,
-            person_document: docs[3].value,
-            category: docs[4].value,
-            municipal_organisation: docs[5].value,
-            competition_status: docs[6].value,
-            sport: docs[7].value,
-            competition_name: docs[8].value,
-            result: docs[9].value,
-            federation_head: docs[10].value,
+            date: "25.06.2024",
+            number: docs[0].value,
+            category: docs[1].value,
+
+            name: docs[3].value,
+            sport: docs[4].value,
+            district: docs[5].value,
         }
     );
     console.log(date);
@@ -168,7 +159,7 @@ function GetFile(filename, adress) {
         a.download = fileName;
         a.dispatchEvent(new MouseEvent('click'));
 
-            window.location.replace("http://5.35.95.153:5173/Federation/Sportsman");
+        window.location.replace("http://.35.95.153:5173/Committee/members");
     }
 
     xhr.onerror = function () {

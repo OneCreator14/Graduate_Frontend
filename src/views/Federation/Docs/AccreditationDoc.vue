@@ -27,7 +27,7 @@
 
             </div>
 
-            <form action="http://localhost:5173/Federation/Accreditation" style="margin-top: 40px; margin-left: 672px;">
+            <form action="http://5.35.95.153:5173/Federation/Accreditation" style="margin-top: 40px; margin-left: 672px;">
                 <BaseButton id="send">
                     Готово
                 </BaseButton>

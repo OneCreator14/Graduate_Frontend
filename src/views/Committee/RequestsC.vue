@@ -56,8 +56,8 @@ import router from "@/router";
 import BaseButton from "@/components/button/BaseButton.vue"
 
 var requests = [
-  { id: 1, stage: "Созыв комиссии", deadline: "12 дней", service: "Государственная аккредитация спортивной федерации", startDate: "21.04.2024", applicant: "Федерация спортивного ориентирования", endDate: "21.07.2024" },
-  { id: 2, stage: "Рассмотрение документов", deadline: "61 день", service: "Присвоение спортивного разряда", startDate: "17.06.2024", applicant: "Федерация спортивного ориентирования", endDate: "18.08.2024" },
+  { id: 1, stage: "Ожидает подписания председателем", deadline: "12 дней", service: "Государственная аккредитация спортивной федерации", startDate: "21.04.2024", applicant: "Федерация спортивного ориентирования", endDate: "21.07.2024" },
+  { id: 2, stage: "Проверка документов", deadline: "91 день", service: "Присвоение спортивного разряда", startDate: "25.06.2024", applicant: "Федерация спортивного ориентирования", endDate: "25.09.2024" },
 ]
 
 const goRequest = () => {
@@ -76,7 +76,7 @@ const products = [
 ]
 
 function DoRequest(request){
-  window.location.replace("http://localhost:5173/Committee/Sportsman");
+  window.location.replace("http://5.35.95.153:5173/Committee/Sportsman");
 }
 </script>
 

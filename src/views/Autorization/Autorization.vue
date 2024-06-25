@@ -44,9 +44,9 @@ function Autorization() {
     console.log(passwordElem)
 
         if(password.value == "123" && login.value == "Orient")
-            window.location.replace("http://localhost:5173/Federation")
+            window.location.replace("http://5.35.95.153:5173/Federation")
         else if(password.value == "123" && login.value == "Committee")
-            window.location.replace("http://localhost:5173/Committee")
+            window.location.replace("http://5.35.95.153:5173/Committee")
         
 
     }

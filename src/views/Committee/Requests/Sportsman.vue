@@ -19,7 +19,7 @@
                     <div class="filename" :id="'filename' + index" style="display: none;">
                         <span>{{ doc.filename }}</span>
                     </div>
-                    <button class="uploadBtn" :id="'fileBtn' + index" @click="FindFile(index)">
+                    <button class="uploadBtn" :id="'fileBtn' + index" @click="GetFile(index)">
                         <div class="pi pi-cloud-download" style="font-size: 1.8rem; color: var(--primary-default);" />
                     </button>
                 </div>
@@ -56,17 +56,17 @@ import { ref } from "vue";
 const disabled = ref(false);
 
 function back(){
-    window.location.replace("http://localhost:5173/Committee/requests");
+    window.location.replace("http://5.35.95.153:5173/Committee/requests");
 }
 
 function complete(){
     // занести изменения стадии в базу данных
-    window.location.replace("http://localhost:5173/Committee/requests");
+    window.location.replace("http://5.35.95.153:5173/Committee/requests");
 }
 
 function next(){
     // занести изменения в базу данных
-    window.location.replace("http://localhost:5173/Committee/decision");
+    window.location.replace("http://5.35.95.153:5173/Committee/SportsmanDes");
 }
 
 const docs = [
@@ -79,12 +79,39 @@ const docs = [
         { name: "Копия документа, подписанного главным судьей, содержащего сведения о количестве стран или субъектов РФ, принявших участие в соответствующем соревновани", isLoaded: false, id: 6},
         ]
 
-function FindFile(index) {
-    
+function GetFile(index) {
+    const filename = index + ".pdf";
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://5.35.95.153:5000/' + 'downloadc');
+    xhr.responseType = 'blob';
+    xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    xhr.send();
+
+    // 4. Этот код сработает после того, как мы получим ответ сервера
+    xhr.onload = function (e) {
+        if (xhr.status != 200) {
+            alert(`Ошибка ${xhr.status}: ${xhr.statusText}`);
+        }
+        else {
+            var blob = e.currentTarget.response;
+            saveBlob(blob, filename);
+        }
+    };
+
+    function saveBlob(blob, fileName) {
+        var a = document.createElement('a');
+        a.href = window.URL.createObjectURL(blob);
+        a.download = fileName;
+        a.dispatchEvent(new MouseEvent('click'));
+    }
+
+    xhr.onerror = function () {
+        alert("Запрос не удался");
+    };
 }
 
 async function sendToTable($event) {
-    let response = await fetch('http://localhost:5000/api/test', {
+    let response = await fetch('http://5.35.95.153:5000/api/test', {
         method: 'post',
         body: JSON.stringify("123"),
     });
