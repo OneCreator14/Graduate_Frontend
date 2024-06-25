@@ -39,7 +39,7 @@ const router = createRouter({
     { // дефолт
       path: '/',
       name: 'home',
-      component: MainPage
+      component: Autorization
     },
     {
       path: '/Committee/membersC',

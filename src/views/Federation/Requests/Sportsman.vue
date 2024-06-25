@@ -42,34 +42,6 @@
 
             </div>
 
-            <!-- При необходимости -->
-
-            <h3 style="margin-top: 30px;">При наличии:</h3>
-            <div v-for="(doc, index) in unnecessaryDocs" :key="doc.name" class="listElem">
-                <div class="info">
-                    {{ doc.name }}
-                </div>
-
-                <div class="upload" :id="'fileBack' + index">
-                    <div class="pi pi-file" :id="'fileicon' + index"
-                        style="font-size: 1.1rem; display: none; color: gray;" />
-                    <div class="filename" :id="'filename' + index" style="display: none;">
-                        <span>{{ doc.filename }}</span>
-                    </div>
-                    <button class="uploadBtn" :id="'fileBtn' + index" @click="FindFile(index)">
-                        <div class="pi pi-cloud-upload" style="font-size: 1.5rem" />
-                    </button>
-                </div>
-
-                <form action="view/upload.php" target="rFrame" method="POST" enctype="multipart/form-data">
-                    <div class="hiddenInput">
-                        <input type="file" :id="'my_hidden_file' + index" name="loadfile" @change="LoadFile(index)">
-                        <input type="submit" :id="'my_hidden_load' + index" style="display: none" value='Загрузить'>
-                    </div>
-                </form>
-
-            </div>
-
 
 
             <BaseButton id="send">
@@ -118,16 +90,17 @@ function LoadFile(index) {
     document.getElementById('my_hidden_load' + index).click();
 }
 
-async function sendToTable($event) {
-    let response = await fetch('http://localhost:5000/api/test', {
-        method: 'post',
-        body: JSON.stringify("123"),
-    });
+// async function sendToTable($event) {
+//     let response = await fetch('http://localhost:5000/api/test', {
+//         method: 'post',
+//         body: JSON.stringify("123"),
+//     });
 
-    let result = await response.json();
+//     let result = await response.json();
 
-    alert(result.message);
-};
+//     alert(result.message);
+// };
+
 
 </script>
 

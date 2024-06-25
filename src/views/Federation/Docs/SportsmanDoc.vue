@@ -17,17 +17,19 @@
                 <div class="input" v-if="doc.isDate" style="margin-top: 0">
                     <Calendar :id="index" v-model="date" dateFormat="dd.mm.yy" placeholder="__.__.____"
                         style="border: 1px solid var(--primary-default); border-radius: 7px;">
-                    </Calendar>
+                    </Calendar> 
+                    <Textarea v-if="doc.isTextArea" v-model="value" variant="filled" rows="5" cols="30" class="input" />
                 </div>
-                <Textarea v-if="doc.isTextArea" v-model="value" variant="filled" rows="5" cols="30" class="input" />
+                <Textarea v-if="doc.isTextArea" v-model="doc.value" variant="filled" rows="5" cols="30" class="input" />
 
             </div>
 
-            <BaseButton id="send" @click="send()"
-                style="margin-top: 40px; margin-left: 672px;">
+            <BaseButton id="send" @click="send()" style="margin-top: 40px; margin-left: 672px;">
                 Готово
             </BaseButton>
+            <!-- <Dropdown @change="Sportsman()" v-model="selectedCity" editable :options="cities" optionLabel="name" placeholder="Выберите спортсмена..." class="w-full md:w-14rem" /> -->
 
+            <button @click="test()"></button>
 
         </div>
     </div>
@@ -44,60 +46,132 @@ const date = ref();
 
 const docs = [
     { name: "Наименование спортивной организации, направляющей представление", id: 1, value: 'Региональная спортивная федерация спортивного ориентирования Ленинградской области' },
-    { name: "ИНН", id: 2, value: '4703110935' },
-    { name: "ОГРН", id: 3, value: '1094700000097' },
-    { name: "Номер телефона", id: 4, value: '+79217435286' },
-    { name: "Электронная почта", id: 5, value: 'orienteering.lo@yandex.ru' },
-    { name: "ФИО спортсмена", id: 6, value: "" },
-    { name: "Дата рождения", id: 7, isDate: true, value: "" },
-    { name: "Данные документа, удостоверяющего личность спортсмена", id: 8, value: "" },
-    { name: "Сведения об организации, осуществляющей деятельность в области физической культуры и спорта", id: 9, value: "Региональная спортивная федерация спортивного ориентирования Ленинградской области" },
-    { name: "Статус соревнований", id: 10, value: "" },
-    { name: "Вид спорта", id: 11, value: "Спортивное ориентирование" },
-    { name: "Наименование соревнований", id: 12, value: "" },
-    { name: "Результат спортсмена", id: 13, value: "" },
+    { name: "ФИО спортсмена", id: 2, value: "" },
+    { name: "Дата рождения", id: 3, isDate: true, value: "" },
+    { name: "Данные документа, удостоверяющего личность спортсмена", id: 4, value: "" },
+    { name: "Сведения об организации, осуществляющей деятельность в области физической культуры и спорта", id: 5, value: "Региональная спортивная федерация спортивного ориентирования Ленинградской области" },
+    { name: "Спортивный разряд", id: 5, value: "" },
+    { name: "Статус соревнований", id: 6, value: "" },
+    { name: "Вид спорта", id: 7, value: "Спортивное ориентирование" },
+    { name: "Наименование соревнований", id: 8, value: "" },
+    { name: "Результат спортсмена", id: 9, value: "" },
+    { name: "Президент федерации", id: 10, value: "Куприенко Д.В." },
 ]
+
+const selectedCity = ref();
+const cities = ref([
+    { name: 'Шубина Макара Алексеевна'},
+    { name: 'Русских Владимир Павлович'},
+    { name: 'Гердт Вадим Андреевич'},
+    { name: 'Иванов Константин Андреевич' },
+    { name: 'Королева Екатерина Михайловна' }
+]);
+
+
+let xhr = new XMLHttpRequest();
+xhr.open('GET', 'http://localhost:5000/sportsmandoc', true);  //5.35.95.153
+xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+xhr.send();
+
+// 4. Этот код сработает после того, как мы получим ответ сервера
+xhr.onload = function (e) {
+    if (xhr.status != 200) { // анализируем HTTP-статус ответа, если статус не 200, то произошла ошибка
+        alert(`Ошибка ${xhr.status}: ${xhr.statusText}`); // Например, 404: Not Found
+    }
+    else {
+        let user = {
+            name: "John",
+            age: 30,
+        }
+        const json = JSON.parse(e.currentTarget.response);
+
+        console.log("ПЫТАЕМСЯ: " + json.full_name1);
+    }
+};
+
+xhr.onerror = function () {
+    alert("Запрос не удался");
+};
+
 
 
 
 function send() {
-
-    // //console.log(docs[5])
-    // fetch("http://5.35.95.153:5000/createrequest", {
-    //     mode: 'no-cors',
-    //     method: "POST",
-    //     body: JSON.stringify({
-    //         federation: "123",
-    //         full_name: "456",
-    //         birth_date: "456",
-    //         person_document: "456",
-    //         category: "456",
-    //         competition_status: "456",
-    //         sport: "456",
-    //         competition_name: "456",
-    //         result: "456"
-    //     }),
-    //     headers: {
-    //         "Content-type": "application/json; charset=UTF-8"
-    //     }
-    // });
-
-    // setTimeout(() => {  console.log("World!"); }, 3000);
-
-    console.log(window.location.href);
-
-    fetch('http://5.35.95.153:5000/downloadrequest', {
-        mode: 'no-cors',
-        method: 'GET',
-    })
-        .then((response) => {
-            console.log(response.ok);
-            console.log(response.status);
-            console.log(response.statusText);
-        })
+    SendReq("createrequest");
+    GetFile("Request.docx", "downloadrequest");
+}
 
 
-    window.location.href = window.location.href + 'http://localhost:5173/Federation/Accreditation';
+function SendReq(adress) {
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://5.35.95.153:5000/' + adress, true);  //5.35.95.153
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onload = () => {
+        const data = xhr.responseText
+        console.log(data)
+    }
+
+    // когда придёт ответ на наше обращение к серверу, мы его обработаем здесь
+    xhr.onreadystatechange = function () {
+        // если запрос принят и сервер ответил, что всё в порядке
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // выводим то, что ответил нам сервер — так мы убедимся, что данные он получил правильно
+            result.innerHTML = this.responseText;
+        }
+    };
+    xhr.onerror = function () {
+        alert("Запрос не удался");
+    };
+    const finalDate = String(date.value); 
+    finalDate.substring(0, 10);
+    var data = JSON.stringify(
+        {
+            federation: docs[0].value,
+            full_name: docs[1].value,
+            birth_date: finalDate,
+            person_document: docs[3].value,
+            category: docs[4].value,
+            municipal_organisation: docs[5].value,
+            competition_status: docs[6].value,
+            sport: docs[7].value,
+            competition_name: docs[8].value,
+            result: docs[9].value,
+            federation_head: docs[10].value,
+        }
+    );
+    console.log(date);
+    xhr.send(data);
+}
+
+function GetFile(filename, adress) {
+    let xhr = new XMLHttpRequest(); // у конструктора нет аргументов
+    xhr.open('GET', 'http://5.35.95.153:5000/' + adress);
+    xhr.responseType = 'blob';
+    xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    xhr.send();
+
+    // 4. Этот код сработает после того, как мы получим ответ сервера
+    xhr.onload = function (e) {
+        if (xhr.status != 200) { // анализируем HTTP-статус ответа, если статус не 200, то произошла ошибка
+            alert(`Ошибка ${xhr.status}: ${xhr.statusText}`); // Например, 404: Not Found
+        }
+        else {
+            var blob = e.currentTarget.response;
+            saveBlob(blob, filename);
+        }
+    };
+
+    function saveBlob(blob, fileName) {
+        var a = document.createElement('a');
+        a.href = window.URL.createObjectURL(blob);
+        a.download = fileName;
+        a.dispatchEvent(new MouseEvent('click'));
+    }
+
+    xhr.onerror = function () {
+        alert("Запрос не удался");
+    };
 }
 </script>
 
